@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kezlo Learn Exam Revision Planner</title>
+<meta name="description" content="Make a free day by day exam revision plan. Enter your exam date, subjects and hours per day, then follow a today checklist with a timer and flashcards. No signup and no server data.">
+<style>
+body{font-family:system-ui,Arial,sans-serif;line-height:1.6;margin:0;color:#1a1a1a;background:#f7f7f2}
+main{max-width:860px;margin:0 auto;padding:20px}
+header{background:#0f4c5c;color:#fff;padding:28px 20px}
+header h1{margin:0 0 8px;font-size:2rem}
+header p{margin:0;max-width:860px}
+.card{background:#fff;border:1px solid #ddd;border-radius:12px;padding:20px;margin:20px 0}
+label{display:block;margin:12px 0 4px;font-weight:600}
+input,textarea,select{width:100%;padding:10px;border:1px solid #bbb;border-radius:8px;box-sizing:border-box;font-size:1rem}
+button{background:#0f4c5c;color:#fff;border:0;border-radius:8px;padding:10px 18px;font-size:1rem;cursor:pointer;margin:4px 4px 4px 0}
+button.secondary{background:#e8ecec;color:#1a1a1a}
+button.danger{background:#a33}
+.day{border:1px solid #ddd;border-radius:8px;padding:12px;margin:10px 0}
+.day.today{border-color:#0f4c5c;background:#eef6f7}
+.done{text-decoration:line-through;color:#555}
+a{color:#0f4c5c}
+footer{padding:20px;text-align:center;color:#555}
+@media(max-width:600px){header h1{font-size:1.5rem}}
+</style>
+</head>
+<body>
+<header>
+<h1>Kezlo Learn Exam Revision Planner</h1>
+<p>A free exam revision plan for students. Enter your exam date, your subjects and your hours per day. The planner makes a day by day plan, shows what to study today, and helps you revise with a timer and flashcards. No signup. Your plan stays in your own browser.</p>
+</header>
+<main>
+<section class="card">
+<h2>Make your plan</h2>
+<label for="examname">Exam name</label>
+<input id="examname" value="Board exam">
+<label for="examdate">Exam date</label>
+<input id="examdate" type="date">
+<label for="hours">Hours you can study per day</label>
+<input id="hours" type="number" min="1" max="12" value="3">
+<label for="subjects">Subjects, one per line. Put a star after a weak subject, for example Biology star</label>
+<textarea id="subjects" rows="5">Biology star
+Chemistry
+Physics
+English
+Maths star</textarea>
+<p><button id="makeplan">Make my plan</button> <button id="newplan" class="secondary">Make a new plan if I fall behind</button></p>
+<div id="summary"></div>
+</section>
+
+<section class="card">
+<h2>Today</h2>
+<p id="countdown">Enter your exam date to see the countdown.</p>
+<div id="today"></div>
+<p>Tick a task when you finish it. Your ticks are saved in your browser only.</p>
+</section>
+
+<section class="card">
+<h2>Focus timer</h2>
+<p>Work in short focused blocks, then take a short break. This is the Pomodoro way of working.</p>
+<p><strong id="timervalue">25:00</strong> <span id="timermode">Focus time</span></p>
+<p><button id="timer25">25 minutes focus, 5 minutes break</button> <button id="timer50" class="secondary">50 minutes focus, 10 minutes break</button> <button id="timerstop" class="secondary">Stop timer</button></p>
+</section>
+
+<section class="card">
+<h2>Flashcards</h2>
+<label for="cardq">Question</label>
+<input id="cardq" placeholder="What is photosynthesis?">
+<label for="carda">Answer</label>
+<input id="carda" placeholder="Plants make food using sunlight, water and carbon dioxide.">
+<p><button id="addcard">Add flashcard</button></p>
+<div id="cards"></div>
+</section>
+
+<section class="card">
+<h2>Your full plan</h2>
+<div id="plan"></div>
+<p><button id="printplan">Print my plan</button> <button id="copyplan" class="secondary">Copy my plan as text</button> <button id="deletedata" class="danger">Delete all my data</button></p>
+<div id="copymsg"></div>
+</section>
+
+<section class="card">
+<h2>What this planner does</h2>
+<p>This planner turns an exam date into a clear daily task. It does not guess your exam date for you. You enter the date from your official date sheet or admission notice. It spreads subjects across the days you have, gives weak subjects more turns, and puts a full revision day every seventh day. If you fall behind, you can make a new plan from today, and the planner will spread the remaining work again.</p>
+</section>
+
+<section class="card">
+<h2>How to use it</h2>
+<ol>
+<li>Write your exam name and exam date.</li>
+<li>Write how many hours you can really study per day, not the hours you wish you could study.</li>
+<li>Write your subjects, one per line. Put a star after any subject you find hard.</li>
+<li>Click Make my plan.</li>
+<li>Open the Today section every day, tick tasks as you finish them, and use the timer for each study block.</li>
+<li>Add flashcards for facts you keep forgetting, and mark them Got it or Still learning.</li>
+</ol>
+</section>
+
+<section class="card">
+<h2>Worked example</h2>
+<p>Example 1, a 60 day board plan. A student has 5 subjects and 3 hours per day. That is about 180 hours in total. The planner gives each subject regular turns, gives weak subjects extra turns, and keeps every seventh day for full revision. The student studies a little every day instead of cramming everything in the last week.</p>
+<p>Example 2, a 30 day job test plan. A student has 4 topics and 2 hours per day. That is about 60 hours in total. The planner gives each topic a short daily block, with a timed practice set at the end of each week, so speed and accuracy both improve.</p>
+<p>Example 3, a 28 day writing gap plan. A student needs to improve one weak skill. The planner gives that skill a block every day, and gives the other skills a shorter block, so the weak skill gets the most practice without ignoring the rest.</p>
+</section>
+
+<section class="card">
+<h2>A simple weekly rhythm</h2>
+<p>Study six days, then revise on the seventh day. On revision day, do not start a new chapter. Go back over your flashcards, your ticked tasks, and any mistakes you made that week. This spaced return is what makes revision stick.</p>
+</section>
+
+<section class="card">
+<h2>Limits, said honestly</h2>
+<p>This planner is not your board, your university, or your exam body. It does not know your official date sheet, your syllabus, or your merit list. Always check your official date sheet and official notice for dates and rules. This planner does not collect your name, your roll number, or any personal details, and it does not send your plan to a server. If you clear your browser data or change your device, your plan will be gone, so print it or copy it as text first.</p>
+</section>
+
+<section class="card">
+<h2>Questions</h2>
+<p><strong>Do I need an account?</strong> No. The planner works without an account.</p>
+<p><strong>Where is my plan saved?</strong> Only in your own browser, on your own device.</p>
+<p><strong>What if my exam date changes?</strong> Change the date and click Make my plan again. The planner will make a new plan from today.</p>
+<p><strong>What if I miss a day?</strong> Do not try to do two days of work in one day. Click Make a new plan if I fall behind, and the planner will spread the remaining work again.</p>
+<p><a href="https://kezlolearn.blogspot.com/">Back to Kezlo Learn blog</a></p>
+</section>
+</main>
+<footer>Kezlo Learn. A free learning tool. This planner is not an official exam body.</footer>
+<script>
+var planDays=[];
+var cardsData=[];
+try{planDays=JSON.parse(localStorage.getItem("kezloPlan")||"[]");}catch(e){planDays=[];}
+try{cardsData=JSON.parse(localStorage.getItem("kezloCards")||"[]");}catch(e){cardsData=[];}
+function savePlan(){localStorage.setItem("kezloPlan",JSON.stringify(planDays));}
+function saveCards(){localStorage.setItem("kezloCards",JSON.stringify(cardsData));}
+function fmtDate(d){return d.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"});}
+function makePlan(){
+  var exam=document.getElementById("examname").value||"Exam";
+  var dateVal=document.getElementById("examdate").value;
+  var hours=parseInt(document.getElementById("hours").value,10)||3;
+  var lines=document.getElementById("subjects").value.split("\n").map(function(s){return s.trim();}).filter(Boolean);
+  if(!dateVal||!lines.length){document.getElementById("summary").textContent="Please enter an exam date and at least one subject.";return;}
+  var examDate=new Date(dateVal+"T00:00:00");
+  var today=new Date(); today.setHours(0,0,0,0);
+  var totalDays=Math.max(1,Math.round((examDate-today)/86400000));
+  var subjects=lines.map(function(l){return {name:l.replace(/\s*star\s*$/i,"").trim()||l, weak:/star\s*$/i.test(l)};});
+  planDays=[];
+  for(var i=0;i<totalDays;i++){
+    var d=new Date(today); d.setDate(today.getDate()+i);
+    var isRevision=((i+1)%7===0);
+    var tasks=[];
+    if(isRevision){tasks.push("Full revision: go over flashcards and mistakes from this week");}
+    else{
+      var pool=[];
+      subjects.forEach(function(s){pool.push(s.name); if(s.weak){pool.push(s.name);}});
+      var pick=pool[i%pool.length];
+      var pick2=pool[(i+2)%pool.length];
+      tasks.push("Study "+pick+" for a focused block");
+      if(pick2!==pick){tasks.push("Study "+pick2+" for a focused block");}
+      tasks.push("Do 10 flashcards");
+    }
+    planDays.push({date:d.toISOString().slice(0,10), label:fmtDate(d), tasks:tasks.map(function(t){return {text:t,done:false};})});
+  }
+  savePlan(); renderAll();
+  document.getElementById("summary").textContent=exam+" plan made. "+totalDays+" days. About "+(totalDays*hours)+" hours in total at "+hours+" hours per day.";
+}
+function renderAll(){
+  var todayStr=new Date().toISOString().slice(0,10);
+  var examDateVal=document.getElementById("examdate").value;
+  if(examDateVal){
+    var diff=Math.round((new Date(examDateVal+"T00:00:00")-new Date())/86400000);
+    document.getElementById("countdown").textContent=diff>=0?diff+" days left until your exam.":"Your exam date has passed. Enter a new date to make a new plan.";
+  }
+  var todayBox=document.getElementById("today");
+  var todayPlan=planDays.find(function(p){return p.date===todayStr;});
+  if(!todayPlan){todayBox.textContent="No plan for today yet. Make a plan above.";}
+  else{
+    todayBox.innerHTML="";
+    todayPlan.tasks.forEach(function(task,idx){
+      var row=document.createElement("div");
+      var box=document.createElement("input"); box.type="checkbox"; box.checked=task.done;
+      box.onchange=function(){task.done=box.checked; savePlan(); renderPlan();};
+      var span=document.createElement("span"); span.textContent=" "+task.text; if(task.done){span.className="done";}
+      row.appendChild(box); row.appendChild(span); todayBox.appendChild(row);
+    });
+  }
+  renderPlan(); renderCards();
+}
+function renderPlan(){
+  var box=document.getElementById("plan"); box.innerHTML="";
+  var todayStr=new Date().toISOString().slice(0,10);
+  planDays.forEach(function(day){
+    var div=document.createElement("div"); div.className="day"+(day.date===todayStr?" today":"");
+    var h=document.createElement("strong"); h.textContent=day.label+(day.date===todayStr?" (today)":""); div.appendChild(h);
+    day.tasks.forEach(function(task){var p=document.createElement("div"); p.textContent=(task.done?"Done: ":"To do: ")+task.text; if(task.done){p.className="done";} div.appendChild(p);});
+    box.appendChild(div);
+  });
+}
+function renderCards(){
+  var box=document.getElementById("cards"); box.innerHTML="";
+  cardsData.forEach(function(card,idx){
+    var div=document.createElement("div"); div.className="day";
+    var q=document.createElement("strong"); q.textContent=card.q; div.appendChild(q);
+    var a=document.createElement("div"); a.textContent=card.a; div.appendChild(a);
+    var s=document.createElement("div"); s.textContent="Status: "+card.status; div.appendChild(s);
+    var b1=document.createElement("button"); b1.textContent="Got it"; b1.onclick=function(){card.status="Got it"; saveCards(); renderCards();};
+    var b2=document.createElement("button"); b2.className="secondary"; b2.textContent="Still learning"; b2.onclick=function(){card.status="Still learning"; saveCards(); renderCards();};
+    div.appendChild(b1); div.appendChild(b2); box.appendChild(div);
+  });
+}
+var timerId=null, secondsLeft=0, breakSeconds=0, inBreak=false;
+function startTimer(focus,breakMin){
+  clearInterval(timerId); secondsLeft=focus*60; breakSeconds=breakMin*60; inBreak=false;
+  timerId=setInterval(function(){
+    secondsLeft--;
+    if(secondsLeft<0){
+      if(!inBreak){inBreak=true; secondsLeft=breakSeconds; document.getElementById("timermode").textContent="Break time";}
+      else{clearInterval(timerId); document.getElementById("timermode").textContent="Timer finished. Well done."; return;}
+    }
+    var m=Math.floor(Math.max(0,secondsLeft)/60), s=Math.max(0,secondsLeft)%60;
+    document.getElementById("timervalue").textContent=m+":"+(s<10?"0":"")+s;
+    document.getElementById("timermode").textContent=inBreak?"Break time":"Focus time";
+  },1000);
+}
+document.getElementById("makeplan").onclick=makePlan;
+document.getElementById("newplan").onclick=function(){if(planDays.length){var keep=planDays.filter(function(p){return p.date>=new Date().toISOString().slice(0,10);}); planDays=keep; savePlan(); renderAll(); document.getElementById("summary").textContent="Old past days removed. Make a fresh plan from today if your exam date or subjects changed.";}};
+document.getElementById("timer25").onclick=function(){startTimer(25,5);};
+document.getElementById("timer50").onclick=function(){startTimer(50,10);};
+document.getElementById("timerstop").onclick=function(){clearInterval(timerId); document.getElementById("timervalue").textContent="25:00"; document.getElementById("timermode").textContent="Focus time";};
+document.getElementById("addcard").onclick=function(){
+  var q=document.getElementById("cardq").value.trim(), a=document.getElementById("carda").value.trim();
+  if(!q||!a){return;} cardsData.push({q:q,a:a,status:"Still learning"}); saveCards(); renderCards();
+  document.getElementById("cardq").value=""; document.getElementById("carda").value="";
+};
+document.getElementById("printplan").onclick=function(){window.print();};
+document.getElementById("copyplan").onclick=function(){
+  var text=planDays.map(function(d){return d.label+": "+d.tasks.map(function(t){return t.text;}).join("; ");}).join("\n");
+  navigator.clipboard.writeText(text).then(function(){document.getElementById("copymsg").textContent="Plan copied as text.";});
+};
+document.getElementById("deletedata").onclick=function(){localStorage.removeItem("kezloPlan"); localStorage.removeItem("kezloCards"); planDays=[]; cardsData=[]; renderAll(); document.getElementById("summary").textContent="All your saved plan and flashcards have been deleted from this browser.";};
+renderAll();
+</script>
+</body>
+  </html>
