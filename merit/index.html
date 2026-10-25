@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kezlo Learn Merit Calculator Pakistan</title>
+<meta name="description" content="Calculate your MDCAT and UET ECAT aggregate in Pakistan. Enter Matric, FSc and entry test marks, see the full breakdown, and find what test score you need. Unofficial estimate only.">
+<style>
+body{font-family:system-ui,Arial,sans-serif;line-height:1.6;margin:0;color:#1a1a1a;background:#f7f7f2}
+main{max-width:860px;margin:0 auto;padding:20px}
+header{background:#0f4c5c;color:#fff;padding:28px 20px}
+header h1{margin:0 0 8px;font-size:2rem}
+header p{margin:0;max-width:860px}
+.card{background:#fff;border:1px solid #ddd;border-radius:12px;padding:20px;margin:20px 0}
+label{display:block;margin:12px 0 4px;font-weight:600}
+input,select{width:100%;padding:10px;border:1px solid #bbb;border-radius:8px;box-sizing:border-box;font-size:1rem}
+button{background:#0f4c5c;color:#fff;border:0;border-radius:8px;padding:10px 18px;font-size:1rem;cursor:pointer;margin:4px 4px 4px 0}
+button.secondary{background:#e8ecec;color:#1a1a1a}
+.result{font-size:1.4rem;font-weight:700}
+a{color:#0f4c5c}
+footer{padding:20px;text-align:center;color:#555}
+@media(max-width:600px){header h1{font-size:1.5rem}}
+</style>
+</head>
+<body>
+<header>
+<h1>Kezlo Learn Merit Calculator Pakistan</h1>
+<p>Calculate your aggregate for MDCAT and UET ECAT. Enter your Matric marks, your FSc marks and your entry test score. The calculator shows every part of the calculation, so you can see where your aggregate comes from. This is an unofficial estimate only. Kezlo Learn is not PMDC, UHS, UET or any board. The official prospectus and the official merit list control.</p>
+</header>
+<main>
+<section class="card">
+<h2>Calculate your aggregate</h2>
+<label for="route">Choose your route</label>
+<select id="route">
+<option value="mdcat">MDCAT</option>
+<option value="ecat">UET ECAT</option>
+</select>
+<div id="formulanote"></div>
+<label for="matricgot">Matric obtained marks</label>
+<input id="matricgot" type="number" value="1000">
+<label for="matrictotal">Matric total marks</label>
+<input id="matrictotal" type="number" value="1100">
+<label for="fscgot">FSc obtained marks</label>
+<input id="fscgot" type="number" value="1000">
+<label for="fsctotal">FSc total marks</label>
+<input id="fsctotal" type="number" value="1100">
+<label for="testgot">Entry test obtained score</label>
+<input id="testgot" type="number" value="160">
+<label for="testtotal">Entry test total score</label>
+<input id="testtotal" type="number" value="180">
+<p><button id="calc">Calculate aggregate</button></p>
+<div id="output"></div>
+</section>
+
+<section class="card">
+<h2>What score do I need?</h2>
+<p>Enter your Matric and FSc marks above and a target aggregate below. The calculator will tell you what entry test score you need, and it will tell you plainly if the target is impossible.</p>
+<label for="target">Target aggregate in percent</label>
+<input id="target" type="number" value="90">
+<p><button id="reverse">Find the test score I need</button></p>
+<div id="reverseout"></div>
+</section>
+
+<section class="card">
+<h2>What an aggregate actually is</h2>
+<p>Universities do not rank students on raw marks alone, because Matric, FSc and an entry test have different totals. An aggregate turns each part into a percent first, then gives each part a weight, then adds the weighted parts. That one weighted percent is the number universities use to rank applicants.</p>
+</section>
+
+<section class="card">
+<h2>Formula table</h2>
+<p><strong>MDCAT:</strong> Matric 10 percent, FSc 40 percent, MDCAT 50 percent, MDCAT total 180. Older pages that show a total of 200 are outdated. Do not use them.</p>
+<p><strong>UET ECAT:</strong> Matric 17 percent, FSc 50 percent, ECAT 33 percent, ECAT total 400.</p>
+<p><strong>Routes not yet added, and why:</strong> NUST and FAST are not in this first version, because sources disagree on their formulas. They will only be added after their current official prospectus is checked. A narrow calculator that is right is better than a wide calculator that is wrong on some routes.</p>
+</section>
+
+<section class="card">
+<h2>How to calculate, step by step</h2>
+<ol>
+<li>Turn Matric marks into a percent: obtained divided by total, times 100.</li>
+<li>Turn FSc marks into a percent the same way.</li>
+<li>Turn your entry test score into a percent the same way.</li>
+<li>Multiply each percent by its weight, then add the three weighted parts.</li>
+</ol>
+</section>
+
+<section class="card">
+<h2>Worked examples</h2>
+<p><strong>Example A, MDCAT:</strong> Matric 1000 out of 1100 equals 90.91 percent. Times 0.10 equals 9.09. FSc 1000 out of 1100 equals 90.91 percent. Times 0.40 equals 36.36. MDCAT 160 out of 180 equals 88.89 percent. Times 0.50 equals 44.44. Aggregate from the unrounded values equals 89.90 percent. The small difference from adding the rounded parts is only rounding.</p>
+<p><strong>Example B, UET ECAT:</strong> Matric 90 percent times 0.17 equals 15.30. FSc 85 percent times 0.50 equals 42.50. ECAT 300 out of 400 equals 75 percent. Times 0.33 equals 24.75. Aggregate equals 15.30 plus 42.50 plus 24.75, which equals 82.55 percent.</p>
+<p><strong>Example C, reverse, MDCAT target 90 percent:</strong> Matric 90.91 percent and FSc 90.91 percent give 9.09 plus 36.36, which equals 45.45. The amount still needed from MDCAT is 90 minus 45.45, which equals 44.55. Required MDCAT percent is 44.55 divided by 0.50, which equals 89.10 percent, which is 161 out of 180, rounded up, because you cannot score part of a mark.</p>
+</section>
+
+<section class="card">
+<h2>Common mistakes</h2>
+<p>Using an MDCAT total of 200 instead of 180. Using full FSc where a route uses only one part, or the other way round. Mixing board totals, for example 1100 and 1200, without checking your own total. Adding a bonus that the current rules do not give. Treating a pass as a seat. A pass only means you can apply. A seat depends on the official merit list.</p>
+</section>
+
+<section class="card">
+<h2>After your aggregate, what happens next, in order</h2>
+<p>First, the official admission portal. Next, the provisional merit list. Next, the final merit list. Next, college wise selection. Do not trust dates from an old page. Check the current official notice for this cycle.</p>
+</section>
+
+<section class="card">
+<h2>Questions</h2>
+<p><strong>Is this official?</strong> No. This is an unofficial estimate from the formula shown. The official prospectus and the official merit list are the only authoritative sources.</p>
+<p><strong>Can I use it for private colleges?</strong> Use the same formula only if that college says it uses the same formula in its current prospectus. Otherwise, check that college first.</p>
+<p><strong>What if my board total is different?</strong> Change the total marks boxes to your own total. The calculator uses the totals you enter.</p>
+<p><strong>What if my FSc result is under rechecking?</strong> Your aggregate will change when your marks change. Calculate again with the new marks.</p>
+<p><strong>Do A Level students use the same formula?</strong> The same weights apply, but you use your IBCC equivalence percent first. Check the current prospectus for how equivalence is used.</p>
+<p><strong>Does Kezlo Learn collect my marks?</strong> No. All calculation happens in your browser. No roll number and no personal details are asked for, and nothing is sent to a server.</p>
+<p><a href="https://kezlolearn.blogspot.com/">Back to Kezlo Learn blog</a></p>
+</section>
+</main>
+<footer>Kezlo Learn. Unofficial estimate only. Check the official prospectus before applying.</footer>
+<script>
+function getVals(){
+  return {
+    route:document.getElementById("route").value,
+    mg:parseFloat(document.getElementById("matricgot").value),
+    mt:parseFloat(document.getElementById("matrictotal").value),
+    fg:parseFloat(document.getElementById("fscgot").value),
+    ft:parseFloat(document.getElementById("fsctotal").value),
+    tg:parseFloat(document.getElementById("testgot").value),
+    tt:parseFloat(document.getElementById("testtotal").value)
+  };
+}
+function weights(route){
+  if(route==="ecat"){return {m:0.17,f:0.50,t:0.33,label:"UET ECAT: Matric 17 percent, FSc 50 percent, ECAT 33 percent, ECAT total 400."};}
+  return {m:0.10,f:0.40,t:0.50,label:"MDCAT: Matric 10 percent, FSc 40 percent, MDCAT 50 percent, MDCAT total 180."};
+}
+function setDefaults(){
+  var route=document.getElementById("route").value;
+  document.getElementById("formulanote").textContent=weights(route).label;
+  if(route==="ecat"){document.getElementById("testgot").value=300; document.getElementById("testtotal").value=400;}
+  else{document.getElementById("testgot").value=160; document.getElementById("testtotal").value=180;}
+}
+function calc(){
+  var v=getVals(), w=weights(v.route);
+  if(!v.mt||!v.ft||!v.tt||v.mg>v.mt||v.fg>v.ft||v.tg>v.tt){document.getElementById("output").textContent="Please check your marks. Obtained marks cannot be more than total marks, and totals cannot be empty.";return;}
+  var mp=v.mg/v.mt*100, fp=v.fg/v.ft*100, tp=v.tg/v.tt*100;
+  var total=mp*w.m+fp*w.f+tp*w.t;
+  document.getElementById("output").innerHTML="<p class='result'>Aggregate: "+total.toFixed(2)+" percent</p><p>Matric: "+mp.toFixed(2)+" percent times "+w.m+" equals "+(mp*w.m).toFixed(2)+"</p><p>FSc: "+fp.toFixed(2)+" percent times "+w.f+" equals "+(fp*w.f).toFixed(2)+"</p><p>Entry test: "+tp.toFixed(2)+" percent times "+w.t+" equals "+(tp*w.t).toFixed(2)+"</p><p>Unofficial estimate only. Check the official prospectus before applying.</p>";
+}
+function reverse(){
+  var v=getVals(), w=weights(v.route), target=parseFloat(document.getElementById("target").value);
+  if(!v.mt||!v.ft||isNaN(target)){document.getElementById("reverseout").textContent="Please enter Matric, FSc and a target aggregate first.";return;}
+  var mp=v.mg/v.mt*100, fp=v.fg/v.ft*100, have=mp*w.m+fp*w.f, need=target-have, reqPct=need/w.t;
+  if(reqPct>100){document.getElementById("reverseout").textContent="This target is impossible with these Matric and FSc marks, because you would need more than 100 percent in the entry test.";return;}
+  if(reqPct<=0){document.getElementById("reverseout").textContent="This target is already secured by your Matric and FSc marks alone.";return;}
+  var reqScore=Math.ceil(reqPct/100*v.tt);
+  document.getElementById("reverseout").textContent="You need "+reqPct.toFixed(2)+" percent in the entry test, which is "+reqScore+" out of "+v.tt+", rounded up.";
+}
+document.getElementById("route").onchange=setDefaults;
+document.getElementById("calc").onclick=calc;
+document.getElementById("reverse").onclick=reverse;
+setDefaults(); calc();
+</script>
+</body>
+</html>
