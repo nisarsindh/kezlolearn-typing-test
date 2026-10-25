@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kezlo Learn Typing Test</title>
+<meta name="description" content="Free typing test for beginners. Check your speed and accuracy in one minute, with a simple practice plan.">
+<style>
+body{font-family:system-ui,Arial,sans-serif;line-height:1.6;margin:0;color:#1a1a1a;background:#f7f7f2}
+main{max-width:820px;margin:0 auto;padding:20px}
+header{background:#0f4c5c;color:#fff;padding:28px 20px}
+header h1{margin:0 0 8px;font-size:2rem}
+header p{margin:0;max-width:820px}
+.card{background:#fff;border:1px solid #ddd;border-radius:12px;padding:20px;margin:20px 0}
+#passage{font-size:1.15rem;background:#f0f4f4;border-radius:8px;padding:16px;min-height:120px}
+#passage span.correct{color:#0a7a42}
+#passage span.wrong{color:#c0392b;background:#fdecea}
+#passage span.current{text-decoration:underline}
+textarea{width:100%;min-height:110px;font-size:1.05rem;padding:12px;border:1px solid #bbb;border-radius:8px;box-sizing:border-box}
+button{background:#0f4c5c;color:#fff;border:0;border-radius:8px;padding:10px 18px;font-size:1rem;cursor:pointer;margin:4px 4px 4px 0}
+button.secondary{background:#e8ecec;color:#1a1a1a}
+.stats{display:flex;gap:16px;flex-wrap:wrap;font-size:1.1rem}
+.stats strong{font-size:1.4rem;display:block}
+a{color:#0f4c5c}
+footer{padding:20px;text-align:center;color:#555}
+@media(max-width:600px){header h1{font-size:1.5rem}#passage{font-size:1rem}}
+</style>
+</head>
+<body>
+<header>
+<h1>Kezlo Learn Typing Test</h1>
+<p>A free one minute typing test for beginners. Check your speed and accuracy, then practice a little every day.</p>
+</header>
+<main>
+<section class="card">
+<h2>Take the test</h2>
+<p>Put your fingers on the home row. Click Start, then type the passage below. The timer starts with your first letter and stops after one minute.</p>
+<div class="stats">
+<div><strong id="time">60</strong> seconds left</div>
+<div><strong id="livewpm">0</strong> words per minute</div>
+<div><strong id="liveacc">100%</strong> accuracy</div>
+</div>
+<p>
+<button id="startBtn">Start test</button>
+<button id="passageBtn" class="secondary">New passage</button>
+<button id="resetBtn" class="secondary">Restart</button>
+</p>
+<div id="passage" aria-live="polite"></div>
+<label for="input">Type here:</label>
+<textarea id="input" placeholder="Click Start, then type the passage here." disabled></textarea>
+<div id="result"></div>
+</section>
+
+<section class="card">
+<h2>What this test does</h2>
+<p>This test shows how fast and how accurately you can type a short English passage in one minute. It counts correct letters, works out your words per minute, and works out your accuracy. That is all. It does not need a login, and it does not send your typing anywhere.</p>
+</section>
+
+<section class="card">
+<h2>How to use it</h2>
+<ol>
+<li>Put your left fingers on A S D F and your right fingers on J K L and the semicolon key.</li>
+<li>Click Start test.</li>
+<li>Type the passage slowly and correctly. Do not look at the keyboard if you can help it.</li>
+<li>When the minute ends, read your speed and accuracy, then try again with a new passage.</li>
+</ol>
+</section>
+
+<section class="card">
+<h2>Worked example</h2>
+<p>If you type 240 correct letters in one minute, your speed is 48 words per minute. Here is why. One word in this test counts as 5 letters. So 240 divided by 5 equals 48. Then 48 divided by 1 minute equals 48 words per minute.</p>
+</section>
+
+<section class="card">
+<h2>A simple practice plan</h2>
+<p>Practice for 15 minutes a day. Type one passage slowly, then type it again. Test yourself once a week and write down your speed and accuracy. If your accuracy goes up, your speed will usually follow in the next weeks. Accuracy first, always.</p>
+</section>
+
+<section class="card">
+<h2>Limits, said honestly</h2>
+<p>This test measures your typing on this passage only. A harder passage, a different keyboard, or a tired day can change your result. A one minute result is a helpful guide, not a certificate and not a job test. Use it to track your own progress over time.</p>
+<p>Your results stay in your own browser. Nothing is saved on a server, and no account is needed.</p>
+</section>
+
+<section class="card">
+<h2>Questions</h2>
+<p><strong>How long will it take to improve?</strong><br>It depends on daily practice. With regular practice, most beginners notice real progress in a few weeks. Some take a little longer, and that is fine.</p>
+<p><strong>Do I need a special keyboard?</strong><br>No. A normal keyboard is enough.</p>
+<p><strong>Should I focus on speed or accuracy?</strong><br>Accuracy first, always. Speed is the reward you get for being accurate.</p>
+</section>
+
+<section class="card">
+<p><a href="https://kezlolearn.blogspot.com/">Back to Kezlo Learn blog</a> for more typing guides, study tools, and learning games.</p>
+</section>
+</main>
+<footer>Kezlo Learn. Free learning tools for everyone.</footer>
+<script>
+const passages = [
+"Learning to type well takes a little patience and a little practice every day. Put your fingers on the home row and look at the screen. Type slowly at first and let accuracy come before speed. In a few weeks your hands will know the keys without you having to look down.",
+"A good study habit is simple and calm. Read the lesson once, write the main points in your own words, and then test yourself. Short study sessions with small breaks work better than one long and tired session. Keep going a little every day and the work starts to feel easy.",
+"Typing is a skill you use for school work, office work, and messages every day. When you can type without looking at the keyboard, your mind stays on your ideas. Practice with short passages, check your mistakes, and try again. Slow and steady practice builds real speed over time."
+];
+let passage = passages[0];
+let passageIndex = 0;
+let started = false;
+let finished = false;
+let startTime = 0;
+let timer = null;
+let timeLeft = 60;
+const passageEl = document.getElementById("passage");
+const inputEl = document.getElementById("input");
+const timeEl = document.getElementById("time");
+const wpmEl = document.getElementById("livewpm");
+const accEl = document.getElementById("liveacc");
+const resultEl = document.getElementById("result");
+
+function renderPassage() {
+  passageEl.innerHTML = "";
+  passage.split("").forEach(function(ch, i) {
+    const s = document.createElement("span");
+    s.textContent = ch;
+    if (i === 0) s.className = "current";
+    passageEl.appendChild(s);
+  });
+}
+function resetTest() {
+  clearInterval(timer);
+  started = false;
+  finished = false;
+  timeLeft = 60;
+  timeEl.textContent = "60";
+  wpmEl.textContent = "0";
+  accEl.textContent = "100%";
+  inputEl.value = "";
+  inputEl.disabled = true;
+  inputEl.placeholder = "Click Start, then type the passage here.";
+  resultEl.innerHTML = "";
+  renderPassage();
+}
+function finishTest() {
+  if (finished) return;
+  finished = true;
+  clearInterval(timer);
+  inputEl.disabled = true;
+  const typed = inputEl.value;
+  let correct = 0;
+  for (let i = 0; i < typed.length; i++) {
+    if (typed[i] === passage[i]) correct++;
+  }
+  const minutes = 1;
+  const wpm = Math.round((correct / 5) / minutes);
+  const accuracy = typed.length ? Math.round((correct / typed.length) * 100) : 100;
+  wpmEl.textContent = String(wpm);
+  accEl.textContent = accuracy + "%";
+  resultEl.innerHTML = "<h3>Your result</h3><p><strong>" + wpm + " words per minute</strong> and <strong>" + accuracy + "% accuracy</strong>. You typed " + typed.length + " letters, with " + correct + " correct.</p><p>Well done. Practice again tomorrow and see if your accuracy goes up.</p>";
+}
+function tick() {
+  timeLeft--;
+  timeEl.textContent = String(timeLeft);
+  if (timeLeft <= 0) finishTest();
+}
+document.getElementById("startBtn").addEventListener("click", function() {
+  resetTest();
+  inputEl.disabled = false;
+  inputEl.focus();
+});
+document.getElementById("resetBtn").addEventListener("click", resetTest);
+document.getElementById("passageBtn").addEventListener("click", function() {
+  passageIndex = (passageIndex + 1) % passages.length;
+  passage = passages[passageIndex];
+  resetTest();
+});
+inputEl.addEventListener("input", function() {
+  if (finished) return;
+  if (!started) {
+    started = true;
+    startTime = Date.now();
+    timer = setInterval(tick, 1000);
+  }
+  const typed = inputEl.value;
+  const spans = passageEl.querySelectorAll("span");
+  let correct = 0;
+  spans.forEach(function(s, i) {
+    s.className = "";
+    if (i < typed.length) {
+      if (typed[i] === passage[i]) { s.className = "correct"; correct++; }
+      else { s.className = "wrong"; }
+    } else if (i === typed.length) {
+      s.className = "current";
+    }
+  });
+  const accuracy = typed.length ? Math.round((correct / typed.length) * 100) : 100;
+  accEl.textContent = accuracy + "%";
+  if (typed.length >= passage.length) finishTest();
+});
+renderPassage();
+</script>
+</body>
+</html>
