@@ -6,23 +6,28 @@
 <title>Kezlo Learn Exam Revision Planner</title>
 <meta name="description" content="Make a free day by day exam revision plan. Enter your exam date, subjects and hours per day, then follow a today checklist with a timer and flashcards. No signup and no server data.">
 <style>
-body{font-family:system-ui,Arial,sans-serif;line-height:1.6;margin:0;color:#1a1a1a;background:#f7f7f2}
-main{max-width:860px;margin:0 auto;padding:20px}
-header{background:#0f4c5c;color:#fff;padding:28px 20px}
+body{font-family:system-ui,Arial,sans-serif;line-height:1.6;margin:0;color:#1a1a1a;background:#eef2f2}
+main{max-width:860px;margin:0 auto;padding:16px}
+header{background:#0f4c5c;color:#fff;padding:32px 20px 24px;text-align:center}
 header h1{margin:0 0 8px;font-size:2rem}
-header p{margin:0;max-width:860px}
-.card{background:#fff;border:1px solid #ddd;border-radius:12px;padding:20px;margin:20px 0}
+header p{margin:0 auto;max-width:680px;opacity:.95}
+.card{background:#fff;border:1px solid #e2e8e8;border-radius:20px;padding:22px;margin:18px 0;box-shadow:0 6px 20px rgba(15,76,92,.08)}
 label{display:block;margin:12px 0 4px;font-weight:600}
-input,textarea,select{width:100%;padding:10px;border:1px solid #bbb;border-radius:8px;box-sizing:border-box;font-size:1rem}
-button{background:#0f4c5c;color:#fff;border:0;border-radius:8px;padding:10px 18px;font-size:1rem;cursor:pointer;margin:4px 4px 4px 0}
+input,textarea,select{width:100%;padding:12px;border:1px solid #bbb;border-radius:14px;box-sizing:border-box;font-size:1rem}
+button{background:#0f4c5c;color:#fff;border:0;border-radius:999px;padding:12px 22px;font-size:1rem;cursor:pointer;margin:4px 4px 4px 0;font-weight:700}
 button.secondary{background:#e8ecec;color:#1a1a1a}
 button.danger{background:#a33}
-.day{border:1px solid #ddd;border-radius:8px;padding:12px;margin:10px 0}
+.day{border:1px solid #e2e8e8;border-radius:16px;padding:14px;margin:10px 0}
 .day.today{border-color:#0f4c5c;background:#eef6f7}
 .done{text-decoration:line-through;color:#555}
+.resultcard{background:#0f4c5c;color:#fff;border-radius:18px;padding:20px;text-align:center;margin-top:16px;font-size:1.1rem}
+#timervalue{font-size:3rem;font-weight:800;color:#0f4c5c;display:block;text-align:center}
+#countdown{font-size:1.4rem;font-weight:700;color:#0f4c5c;text-align:center}
+#summary{background:#f0f6f7;border-radius:16px;padding:16px;text-align:center;font-weight:700;color:#0f4c5c}
+#summary:empty{display:none}
 a{color:#0f4c5c}
 footer{padding:20px;text-align:center;color:#555}
-@media(max-width:600px){header h1{font-size:1.5rem}}
+@media(max-width:600px){header h1{font-size:1.5rem}button{width:100%}}
 </style>
 </head>
 <body>
