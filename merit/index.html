@@ -6,20 +6,25 @@
 <title>Kezlo Learn Merit Calculator Pakistan</title>
 <meta name="description" content="Calculate your MDCAT and UET ECAT aggregate in Pakistan. Enter Matric, FSc and entry test marks, see the full breakdown, and find what test score you need. Unofficial estimate only.">
 <style>
-body{font-family:system-ui,Arial,sans-serif;line-height:1.6;margin:0;color:#1a1a1a;background:#f7f7f2}
-main{max-width:860px;margin:0 auto;padding:20px}
-header{background:#0f4c5c;color:#fff;padding:28px 20px}
-header h1{margin:0 0 8px;font-size:2rem}
-header p{margin:0;max-width:860px}
-.card{background:#fff;border:1px solid #ddd;border-radius:12px;padding:20px;margin:20px 0}
-label{display:block;margin:12px 0 4px;font-weight:600}
-input,select{width:100%;padding:10px;border:1px solid #bbb;border-radius:8px;box-sizing:border-box;font-size:1rem}
-button{background:#0f4c5c;color:#fff;border:0;border-radius:8px;padding:10px 18px;font-size:1rem;cursor:pointer;margin:4px 4px 4px 0}
-button.secondary{background:#e8ecec;color:#1a1a1a}
-.result{font-size:1.4rem;font-weight:700}
-a{color:#0f4c5c}
-footer{padding:20px;text-align:center;color:#555}
-@media(max-width:600px){header h1{font-size:1.5rem}}
+body{font-family:system-ui,Arial,sans-serif;line-height:1.6;margin:0;color:#1a1a1a;background:#eef2f2}
+  main{max-width:860px;margin:0 auto;padding:16px}
+  header{background:#0f4c5c;color:#fff;padding:32px 20px 24px;text-align:center}
+  header h1{margin:0 0 8px;font-size:2rem}
+  header p{margin:0 auto;max-width:680px;opacity:.95}
+  .card{background:#fff;border:1px solid #e2e8e8;border-radius:20px;padding:22px;margin:18px 0;box-shadow:0 6px 20px rgba(15,76,92,.08)}
+  label{display:block;margin:12px 0 4px;font-weight:600}
+  input,select{width:100%;padding:12px;border:1px solid #bbb;border-radius:14px;box-sizing:border-box;font-size:1rem}
+  button{background:#0f4c5c;color:#fff;border:0;border-radius:999px;padding:12px 22px;font-size:1rem;cursor:pointer;margin:4px 4px 4px 0;font-weight:700}
+  button.secondary{background:#e8ecec;color:#1a1a1a}
+  .resultcard{background:#0f4c5c;color:#fff;border-radius:18px;padding:22px;text-align:center;margin-top:16px}
+  .resultcard .bignum{font-size:3rem;font-weight:800;display:block;line-height:1.1}
+  .breakdown{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;text-align:center;margin-top:16px}
+  .breakdown>div{background:#f0f6f7;border-radius:16px;padding:14px 8px}
+  .breakdown strong{font-size:1.3rem;display:block;color:#0f4c5c}
+  .result{font-size:1.4rem;font-weight:700}
+  a{color:#0f4c5c}
+  footer{padding:20px;text-align:center;color:#555}
+  @media(max-width:600px){header h1{font-size:1.5rem}.breakdown{grid-template-columns:1fr}button{width:100%}}
 </style>
 </head>
 <body>
@@ -139,7 +144,7 @@ function calc(){
   if(!v.mt||!v.ft||!v.tt||v.mg>v.mt||v.fg>v.ft||v.tg>v.tt){document.getElementById("output").textContent="Please check your marks. Obtained marks cannot be more than total marks, and totals cannot be empty.";return;}
   var mp=v.mg/v.mt*100, fp=v.fg/v.ft*100, tp=v.tg/v.tt*100;
   var total=mp*w.m+fp*w.f+tp*w.t;
-  document.getElementById("output").innerHTML="<p class='result'>Aggregate: "+total.toFixed(2)+" percent</p><p>Matric: "+mp.toFixed(2)+" percent times "+w.m+" equals "+(mp*w.m).toFixed(2)+"</p><p>FSc: "+fp.toFixed(2)+" percent times "+w.f+" equals "+(fp*w.f).toFixed(2)+"</p><p>Entry test: "+tp.toFixed(2)+" percent times "+w.t+" equals "+(tp*w.t).toFixed(2)+"</p><p>Unofficial estimate only. Check the official prospectus before applying.</p>";
+  document.getElementById("output").innerHTML="<div class='resultcard'><div>Aggregate</div><span class='bignum'>"+total.toFixed(2)+" percent</span><p>Unofficial estimate only. Check the official prospectus before applying.</p></div><div class='breakdown'><div><strong>"+(mp*w.m).toFixed(2)+"</strong>Matric part<br>"+mp.toFixed(2)+" percent</div><div><strong>"+(fp*w.f).toFixed(2)+"</strong>FSc part<br>"+fp.toFixed(2)+" percent</div><div><strong>"+(tp*w.t).toFixed(2)+"</strong>Entry test part<br>"+tp.toFixed(2)+" percent</div></div>;
 }
 function reverse(){
   var v=getVals(), w=weights(v.route), target=parseFloat(document.getElementById("target").value);
