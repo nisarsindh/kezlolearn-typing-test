@@ -6,24 +6,27 @@
 <title>Kezlo Learn Typing Test</title>
 <meta name="description" content="Free typing test for beginners. Check your speed and accuracy in one minute, with a simple practice plan.">
 <style>
-body{font-family:system-ui,Arial,sans-serif;line-height:1.6;margin:0;color:#1a1a1a;background:#f7f7f2}
-main{max-width:820px;margin:0 auto;padding:20px}
-header{background:#0f4c5c;color:#fff;padding:28px 20px}
+body{font-family:system-ui,Arial,sans-serif;line-height:1.6;margin:0;color:#1a1a1a;background:#eef2f2}
+main{max-width:860px;margin:0 auto;padding:16px}
+header{background:#0f4c5c;color:#fff;padding:32px 20px 24px;text-align:center}
 header h1{margin:0 0 8px;font-size:2rem}
-header p{margin:0;max-width:820px}
-.card{background:#fff;border:1px solid #ddd;border-radius:12px;padding:20px;margin:20px 0}
-#passage{font-size:1.15rem;background:#f0f4f4;border-radius:8px;padding:16px;min-height:120px}
+header p{margin:0 auto;max-width:640px;opacity:.95}
+.card{background:#fff;border:1px solid #e2e8e8;border-radius:20px;padding:22px;margin:18px 0;box-shadow:0 6px 20px rgba(15,76,92,.08)}
+#passage{font-size:1.15rem;background:#f0f4f4;border-radius:14px;padding:18px;min-height:120px}
 #passage span.correct{color:#0a7a42}
 #passage span.wrong{color:#c0392b;background:#fdecea}
 #passage span.current{text-decoration:underline}
-textarea{width:100%;min-height:110px;font-size:1.05rem;padding:12px;border:1px solid #bbb;border-radius:8px;box-sizing:border-box}
-button{background:#0f4c5c;color:#fff;border:0;border-radius:8px;padding:10px 18px;font-size:1rem;cursor:pointer;margin:4px 4px 4px 0}
+textarea{width:100%;min-height:110px;font-size:1.05rem;padding:14px;border:1px solid #bbb;border-radius:14px;box-sizing:border-box}
+button{background:#0f4c5c;color:#fff;border:0;border-radius:999px;padding:12px 22px;font-size:1rem;cursor:pointer;margin:4px 4px 4px 0;font-weight:700}
 button.secondary{background:#e8ecec;color:#1a1a1a}
-.stats{display:flex;gap:16px;flex-wrap:wrap;font-size:1.1rem}
-.stats strong{font-size:1.4rem;display:block}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;text-align:center}
+.stats>div{background:#f0f6f7;border-radius:16px;padding:14px 8px}
+.stats strong{font-size:2rem;display:block;color:#0f4c5c;line-height:1.1}
+.resultcard{background:#0f4c5c;color:#fff;border-radius:18px;padding:20px;text-align:center;margin-top:16px}
+.resultcard strong{font-size:2.2rem;display:block}
 a{color:#0f4c5c}
 footer{padding:20px;text-align:center;color:#555}
-@media(max-width:600px){header h1{font-size:1.5rem}#passage{font-size:1rem}}
+@media(max-width:600px){header h1{font-size:1.5rem}#passage{font-size:1rem}.stats{grid-template-columns:1fr 1fr}button{width:100%}}
 </style>
 </head>
 <body>
@@ -152,7 +155,7 @@ function finishTest() {
   const accuracy = typed.length ? Math.round((correct / typed.length) * 100) : 100;
   wpmEl.textContent = String(wpm);
   accEl.textContent = accuracy + "%";
-  resultEl.innerHTML = "<h3>Your result</h3><p><strong>" + wpm + " words per minute</strong> and <strong>" + accuracy + "% accuracy</strong>. You typed " + typed.length + " letters, with " + correct + " correct.</p><p>Well done. Practice again tomorrow and see if your accuracy goes up.</p>";
+  resultEl.innerHTML = "<div class='resultcard'><div>Your result</div><strong>" + wpm + " WPM</strong><div>" + accuracy + "% accuracy</div><p>You typed " + typed.length + " letters, with " + correct + " correct.</p><p>Well done. Practice again tomorrow and see if your accuracy goes up.</p></div>";
 }
 function tick() {
   timeLeft--;
