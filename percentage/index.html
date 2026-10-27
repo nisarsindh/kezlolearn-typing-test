@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kezlo Learn Percentage Calculator</title>
+<meta name="description" content="Free percentage calculator for beginners. Find a percent of a number, work out what percent one number is of another, and work out a percent increase or decrease.">
+<style>
+body{font-family:system-ui,Arial,sans-serif;line-height:1.6;margin:0;color:#1a1a1a;background:#eef2f2}
+main{max-width:860px;margin:0 auto;padding:16px}
+header{background:#0f4c5c;color:#fff;padding:32px 20px 24px;text-align:center}
+header h1{margin:0 0 8px;font-size:2rem}
+header p{margin:0 auto;max-width:680px;opacity:.95}
+.card{background:#fff;border:1px solid #e2e8e8;border-radius:20px;padding:22px;margin:18px 0;box-shadow:0 6px 20px rgba(15,76,92,.08)}
+label{display:block;margin:12px 0 4px;font-weight:600}
+input,select{width:100%;padding:12px;border:1px solid #bbb;border-radius:14px;box-sizing:border-box;font-size:1rem}
+button{background:#0f4c5c;color:#fff;border:0;border-radius:999px;padding:12px 22px;font-size:1rem;cursor:pointer;margin:4px 4px 4px 0;font-weight:700}
+.result{font-size:1.25rem;font-weight:700;color:#0f4c5c;min-height:1.6em}
+a{color:#0f4c5c}
+footer{padding:20px;text-align:center;color:#555}
+@media(max-width:600px){header h1{font-size:1.5rem}button{width:100%}}
+</style>
+</head>
+<body>
+<header>
+<h1>Kezlo Learn Percentage Calculator</h1>
+<p>A free percentage calculator for beginners. Use it for homework, shopping discounts, marks, and everyday maths. No login is needed, and nothing you type is sent anywhere.</p>
+</header>
+<main>
+<section class="card">
+<h2>1. What is this percent of a number?</h2>
+<p>Example: 20 percent of 150 is 30.</p>
+<label for="p1">Percent</label>
+<input id="p1" type="number" value="20" min="0">
+<label for="n1">Number</label>
+<input id="n1" type="number" value="150">
+<p><button onclick="calc1()">Calculate</button></p>
+<p class="result" id="r1"></p>
+</section>
+
+<section class="card">
+<h2>2. What percent is one number of another?</h2>
+<p>Example: 45 out of 180 is 25 percent.</p>
+<label for="n2">First number</label>
+<input id="n2" type="number" value="45">
+<label for="n3">Total number</label>
+<input id="n3" type="number" value="180">
+<p><button onclick="calc2()">Calculate</button></p>
+<p class="result" id="r2"></p>
+</section>
+
+<section class="card">
+<h2>3. Increase or decrease by a percent</h2>
+<p>Example: 200 increased by 15 percent is 230. The same number decreased by 15 percent is 170.</p>
+<label for="n4">Starting number</label>
+<input id="n4" type="number" value="200">
+<label for="p2">Percent</label>
+<input id="p2" type="number" value="15" min="0">
+<label for="mode">Change type</label>
+<select id="mode">
+<option value="up">Increase</option>
+<option value="down">Decrease</option>
+</select>
+<p><button onclick="calc3()">Calculate</button></p>
+<p class="result" id="r3"></p>
+</section>
+
+<section class="card">
+<h2>How to use it</h2>
+<p>1. Pick the question that matches your problem.</p>
+<p>2. Type the numbers into the boxes.</p>
+<p>3. Press Calculate and read the answer in plain words.</p>
+<p>Percent means out of one hundred. So 25 percent means 25 out of every 100. That simple idea is behind all three calculators above.</p>
+</section>
+
+<section class="card">
+<h2>Worked examples</h2>
+<p>Example 1: A shop gives 10 percent off a 500 rupee item. Ten percent of 500 is 50, so you pay 450.</p>
+<p>Example 2: You score 36 marks out of 50. Divide 36 by 50 and multiply by 100. The answer is 72 percent.</p>
+<p>Example 3: Your pocket money rises from 200 to 230. The rise is 30. Divide 30 by 200 and multiply by 100. The rise is 15 percent.</p>
+</section>
+
+<section class="card">
+<h2>Practice plan</h2>
+<p>Try five questions a day for one week. Start with easy numbers such as 10 percent and 50 percent. Then try 25 percent and 15 percent. Check your answer with the calculator, then try the same question again without it.</p>
+</section>
+
+<section class="card">
+<h2>Common questions</h2>
+<p><strong>What if the total is zero?</strong> A percent of zero has no meaning here, so the second calculator asks for a total above zero.</p>
+<p><strong>Can a percent be more than 100?</strong> Yes. If you score 120 out of 100 because of bonus marks, that is 120 percent.</p>
+<p><strong>Do I need to remember a formula?</strong> No. Remember only this: percent means out of one hundred, and the calculator does the rest.</p>
+</section>
+</main>
+<footer>
+<p>Kezlo Learn. Free learning tools for students.</p>
+</footer>
+<script>
+function fmt(x){return Math.round(x*100)/100;}
+function calc1(){
+  var p = parseFloat(document.getElementById('p1').value);
+  var n = parseFloat(document.getElementById('n1').value);
+  if(isNaN(p) || isNaN(n)){document.getElementById('r1').textContent='Please type two numbers.';return;}
+  document.getElementById('r1').textContent = p + ' percent of ' + n + ' is ' + fmt(p/100*n);
+}
+function calc2(){
+  var a = parseFloat(document.getElementById('n2').value);
+  var b = parseFloat(document.getElementById('n3').value);
+  if(isNaN(a) || isNaN(b) || b === 0){document.getElementById('r2').textContent='Please type two numbers, with a total above zero.';return;}
+  document.getElementById('r2').textContent = a + ' out of ' + b + ' is ' + fmt(a/b*100) + ' percent.';
+}
+function calc3(){
+  var n = parseFloat(document.getElementById('n4').value);
+  var p = parseFloat(document.getElementById('p2').value);
+  var mode = document.getElementById('mode').value;
+  if(isNaN(n) || isNaN(p)){document.getElementById('r3').textContent='Please type two numbers.';return;}
+  var out = mode === 'up' ? n*(1+p/100) : n*(1-p/100);
+  var word = mode === 'up' ? 'increased' : 'decreased';
+  document.getElementById('r3').textContent = n + ' ' + word + ' by ' + p + ' percent is ' + fmt(out) + '.';
+}
+</script>
+</body>
+</html>
