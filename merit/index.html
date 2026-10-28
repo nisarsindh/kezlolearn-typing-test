@@ -41,13 +41,14 @@ footer{padding:20px;text-align:center;color:#555}
 <option value="ecat">UET ECAT</option>
 </select>
 <div id="formulanote"></div>
+<p id="routewarning"></p>
 <label for="matricgot">Matric obtained marks</label>
 <input id="matricgot" type="number" value="1000">
 <label for="matrictotal">Matric total marks</label>
 <input id="matrictotal" type="number" value="1100">
-<label for="fscgot">FSc obtained marks</label>
+<label id="fsclabel" for="fscgot">FSc obtained marks</label>
 <input id="fscgot" type="number" value="1000">
-<label for="fsctotal">FSc total marks</label>
+<label id="fsctotallabel" for="fsctotal">FSc total marks</label>
 <input id="fsctotal" type="number" value="1100">
 <label for="testgot">Entry test obtained score</label>
 <input id="testgot" type="number" value="160">
@@ -59,7 +60,7 @@ footer{padding:20px;text-align:center;color:#555}
 
 <section class="card">
 <h2>What score do I need?</h2>
-<p>Enter your Matric and FSc marks above and a target aggregate below. The calculator will tell you what entry test score you need, and it will tell you plainly if the target is impossible.</p>
+<p id="reversenote">Enter your Matric and FSc marks above and a target aggregate below. The calculator will tell you what entry test score you need, and it will tell you plainly if the target is impossible.</p>
 <label for="target">Target aggregate in percent</label>
 <input id="target" type="number" value="90">
 <p><button id="reverse">Find the test score I need</button></p>
@@ -73,8 +74,8 @@ footer{padding:20px;text-align:center;color:#555}
 
 <section class="card">
 <h2>Formula table</h2>
-<p><strong>MDCAT:</strong> Matric 10 percent, FSc 40 percent, MDCAT 50 percent, MDCAT total 180. Older pages that show a total of 200 are outdated. Do not use them.</p>
-<p><strong>UET ECAT:</strong> Matric 17 percent, FSc 50 percent, ECAT 33 percent, ECAT total 400.</p>
+<p><strong>MDCAT:</strong> Matric 10 percent, FSc 40 percent, MDCAT 50 percent, MDCAT total 180. The final aggregate is shown to four decimal places, in line with the verified UHS 2025-26 prospectus rounding. Older pages that show a total of 200 are outdated. Do not use them. Eligibility warnings: for the standard UHS route, the verified minimums are at least 60 percent in HSSC Pre-Medical or equivalent, at least 55 percent in MDCAT for MBBS, and at least 50 percent in MDCAT for BDS. These are eligibility minimums only, not a guarantee of a seat. Eligibility rules and merit formulas may vary by admission authority, program, and admission session. Do not treat UHS rules as universal for every institution. The 2026-27 policy is not claimed here as verified from a primary official document.</p>
+<p><strong>UET ECAT:</strong> Matric 17 percent, FSc Part I / First Year 50 percent, ECAT 33 percent, ECAT total 400. This calculation follows the UET Lahore Fall 2026 ECAT based program formula: Entrance Test 33 percent, First Year 50 percent, Matric 17 percent. Limitation: different admission routes, such as DAE and non-ECAT programs, may use different formulas. Check the current official prospectus for your route before applying.</p>
 <p><strong>Routes not yet added, and why:</strong> NUST and FAST are not in this first version, because sources disagree on their formulas. They will only be added after their current official prospectus is checked. A narrow calculator that is right is better than a wide calculator that is wrong on some routes.</p>
 </section>
 
@@ -91,7 +92,7 @@ footer{padding:20px;text-align:center;color:#555}
 <section class="card">
 <h2>Worked examples</h2>
 <p><strong>Example A, MDCAT:</strong> Matric 1000 out of 1100 equals 90.91 percent. Times 0.10 equals 9.09. FSc 1000 out of 1100 equals 90.91 percent. Times 0.40 equals 36.36. MDCAT 160 out of 180 equals 88.89 percent. Times 0.50 equals 44.44. Aggregate from the unrounded values equals 89.90 percent. The small difference from adding the rounded parts is only rounding.</p>
-<p><strong>Example B, UET ECAT:</strong> Matric 90 percent times 0.17 equals 15.30. FSc 85 percent times 0.50 equals 42.50. ECAT 300 out of 400 equals 75 percent. Times 0.33 equals 24.75. Aggregate equals 15.30 plus 42.50 plus 24.75, which equals 82.55 percent.</p>
+<p><strong>Example B, UET ECAT:</strong> Matric 90 percent times 0.17 equals 15.30. FSc Part I / First Year 85 percent times 0.50 equals 42.50. ECAT 300 out of 400 equals 75 percent. Times 0.33 equals 24.75. Aggregate equals 15.30 plus 42.50 plus 24.75, which equals 82.55 percent.</p>
 <p><strong>Example C, reverse, MDCAT target 90 percent:</strong> Matric 90.91 percent and FSc 90.91 percent give 9.09 plus 36.36, which equals 45.45. The amount still needed from MDCAT is 90 minus 45.45, which equals 44.55. Required MDCAT percent is 44.55 divided by 0.50, which equals 89.10 percent, which is 161 out of 180, rounded up, because you cannot score part of a mark.</p>
 </section>
 
@@ -130,21 +131,37 @@ function getVals(){
   };
 }
 function weights(route){
-  if(route==="ecat"){return {m:0.17,f:0.50,t:0.33,label:"UET ECAT: Matric 17 percent, FSc 50 percent, ECAT 33 percent, ECAT total 400."};}
+  if(route==="ecat"){return {m:0.17,f:0.50,t:0.33,label:"UET ECAT: Matric 17 percent, FSc Part I / First Year 50 percent, ECAT 33 percent, ECAT total 400."};}
   return {m:0.10,f:0.40,t:0.50,label:"MDCAT: Matric 10 percent, FSc 40 percent, MDCAT 50 percent, MDCAT total 180."};
+}
+function routeWarning(route){
+  if(route==="ecat"){return "This calculation follows the UET Lahore Fall 2026 ECAT based program formula: Entrance Test 33 percent, First Year 50 percent, Matric 17 percent. Limitation: different admission routes, such as DAE and non-ECAT programs, may use different formulas. Check the current official prospectus for your route before applying.";}
+  return "Final aggregate is shown to four decimal places, in line with the verified UHS 2025-26 prospectus rounding. Eligibility warnings: for the standard UHS route, the verified minimums are at least 60 percent in HSSC Pre-Medical or equivalent, at least 55 percent in MDCAT for MBBS, and at least 50 percent in MDCAT for BDS. These are eligibility minimums only, not a guarantee of a seat. Eligibility rules and merit formulas may vary by admission authority, program, and admission session. Do not treat UHS rules as universal for every institution. The 2026-27 policy is not claimed here as verified from a primary official document.";
 }
 function setDefaults(){
   var route=document.getElementById("route").value;
   document.getElementById("formulanote").textContent=weights(route).label;
-  if(route==="ecat"){document.getElementById("testgot").value=300; document.getElementById("testtotal").value=400;}
-  else{document.getElementById("testgot").value=160; document.getElementById("testtotal").value=180;}
+  document.getElementById("routewarning").textContent=routeWarning(route);
+  if(route==="ecat"){
+    document.getElementById("fsclabel").textContent="FSc Part I / First Year obtained marks";
+    document.getElementById("fsctotallabel").textContent="FSc Part I / First Year total marks";
+    document.getElementById("reversenote").textContent="Enter your Matric and FSc Part I / First Year marks above and a target aggregate below. The calculator will tell you what entry test score you need, and it will tell you plainly if the target is impossible.";
+    document.getElementById("testgot").value=300; document.getElementById("testtotal").value=400;
+  }
+  else{
+    document.getElementById("fsclabel").textContent="FSc obtained marks";
+    document.getElementById("fsctotallabel").textContent="FSc total marks";
+    document.getElementById("reversenote").textContent="Enter your Matric and FSc marks above and a target aggregate below. The calculator will tell you what entry test score you need, and it will tell you plainly if the target is impossible.";
+    document.getElementById("testgot").value=160; document.getElementById("testtotal").value=180;
+  }
 }
 function calc(){
   var v=getVals(), w=weights(v.route);
   if(!v.mt||!v.ft||!v.tt||v.mg>v.mt||v.fg>v.ft||v.tg>v.tt){document.getElementById("output").textContent="Please check your marks. Obtained marks cannot be more than total marks, and totals cannot be empty.";return;}
   var mp=v.mg/v.mt*100, fp=v.fg/v.ft*100, tp=v.tg/v.tt*100;
   var total=mp*w.m+fp*w.f+tp*w.t;
-  document.getElementById("output").innerHTML="<div class='resultcard'><div>Aggregate</div><span class='bignum'>"+total.toFixed(2)+" percent</span><p>Unofficial estimate only. Check the official prospectus before applying.</p></div><div class='breakdown'><div><strong>"+(mp*w.m).toFixed(2)+"</strong>Matric part<br>"+mp.toFixed(2)+" percent</div><div><strong>"+(fp*w.f).toFixed(2)+"</strong>FSc part<br>"+fp.toFixed(2)+" percent</div><div><strong>"+(tp*w.t).toFixed(2)+"</strong>Entry test part<br>"+tp.toFixed(2)+" percent</div></div>";
+  var fscPartLabel=(v.route==="ecat")?"FSc Part I part":"FSc part";
+  document.getElementById("output").innerHTML="<div class='resultcard'><div>Aggregate</div><span class='bignum'>"+total.toFixed(4)+" percent</span><p>Unofficial estimate only. Check the official prospectus before applying.</p></div><div class='breakdown'><div><strong>"+(mp*w.m).toFixed(4)+"</strong>Matric part<br>"+mp.toFixed(4)+" percent</div><div><strong>"+(fp*w.f).toFixed(4)+"</strong>"+fscPartLabel+"<br>"+fp.toFixed(4)+" percent</div><div><strong>"+(tp*w.t).toFixed(4)+"</strong>Entry test part<br>"+tp.toFixed(4)+" percent</div></div>";
 }
 function reverse(){
   var v=getVals(), w=weights(v.route), target=parseFloat(document.getElementById("target").value);
