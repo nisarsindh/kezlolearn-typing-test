@@ -155,17 +155,25 @@ function setDefaults(){
     document.getElementById("testgot").value=160; document.getElementById("testtotal").value=180;
   }
 }
+function validationError(v, checkTestObtained){
+  if(isNaN(v.mg)||isNaN(v.fg)||(checkTestObtained&&isNaN(v.tg))){return "Please enter all obtained marks. Empty or text entries cannot be calculated. Use numbers only.";}
+  if(isNaN(v.mt)||isNaN(v.ft)||isNaN(v.tt)||v.mt<=0||v.ft<=0||v.tt<=0){return "Please enter valid total marks. Each total must be a number greater than zero.";}
+  if(v.mg<0||v.fg<0||(checkTestObtained&&v.tg<0)){return "Obtained marks cannot be negative. Please enter zero or a positive number.";}
+  if(v.mg>v.mt||v.fg>v.ft||(checkTestObtained&&v.tg>v.tt)){return "Please check your marks. Obtained marks cannot be more than total marks.";}
+  return "";
+}
 function calc(){
-  var v=getVals(), w=weights(v.route);
-  if(!v.mt||!v.ft||!v.tt||v.mg>v.mt||v.fg>v.ft||v.tg>v.tt){document.getElementById("output").textContent="Please check your marks. Obtained marks cannot be more than total marks, and totals cannot be empty.";return;}
+  var v=getVals(), w=weights(v.route), err=validationError(v, true);
+  if(err){document.getElementById("output").textContent=err;return;}
   var mp=v.mg/v.mt*100, fp=v.fg/v.ft*100, tp=v.tg/v.tt*100;
   var total=mp*w.m+fp*w.f+tp*w.t;
   var fscPartLabel=(v.route==="ecat")?"FSc Part I part":"FSc part";
   document.getElementById("output").innerHTML="<div class='resultcard'><div>Aggregate</div><span class='bignum'>"+total.toFixed(4)+" percent</span><p>Unofficial estimate only. Check the official prospectus before applying.</p></div><div class='breakdown'><div><strong>"+(mp*w.m).toFixed(4)+"</strong>Matric part<br>"+mp.toFixed(4)+" percent</div><div><strong>"+(fp*w.f).toFixed(4)+"</strong>"+fscPartLabel+"<br>"+fp.toFixed(4)+" percent</div><div><strong>"+(tp*w.t).toFixed(4)+"</strong>Entry test part<br>"+tp.toFixed(4)+" percent</div></div>";
 }
 function reverse(){
-  var v=getVals(), w=weights(v.route), target=parseFloat(document.getElementById("target").value);
-  if(!v.mt||!v.ft||isNaN(target)){document.getElementById("reverseout").textContent="Please enter Matric, FSc and a target aggregate first.";return;}
+  var v=getVals(), w=weights(v.route), target=parseFloat(document.getElementById("target").value), err=validationError(v, false);
+  if(isNaN(target)){document.getElementById("reverseout").textContent="Please enter Matric, FSc and a target aggregate first.";return;}
+  if(err){document.getElementById("reverseout").textContent=err;return;}
   var mp=v.mg/v.mt*100, fp=v.fg/v.ft*100, have=mp*w.m+fp*w.f, need=target-have, reqPct=need/w.t;
   if(reqPct>100){document.getElementById("reverseout").textContent="This target is impossible with these Matric and FSc marks, because you would need more than 100 percent in the entry test.";return;}
   if(reqPct<=0){document.getElementById("reverseout").textContent="This target is already secured by your Matric and FSc marks alone.";return;}
